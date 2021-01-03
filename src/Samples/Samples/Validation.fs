@@ -57,7 +57,7 @@ let bindings () : Binding<Model, Msg> list = [
   "Value" |> Binding.twoWayValidate(
     (fun m -> m.Value),
     NewValue,
-    (fun m ->  validateInt42 m.Value))
+    (fun m -> validateInt42 m.Value))
   "Password" |> Binding.twoWayValidate(
     (fun m -> m.Password),
     NewPassword,
