@@ -110,7 +110,6 @@ namespace Elmish.Uno.Samples
             e.Handled = true;
         }
 
-
         public bool Navigate(Type sourcePageType) => this.RootFrame.Navigate(sourcePageType, null);
 
         public bool Navigate(Type sourcePageType, object parameter) => this.RootFrame.Navigate(sourcePageType, parameter);
