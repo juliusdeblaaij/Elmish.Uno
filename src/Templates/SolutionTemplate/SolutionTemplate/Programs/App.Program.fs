@@ -3,16 +3,17 @@
 open System
 open Elmish
 open Elmish.Uno
-
-open SolutionTemplate.Configuration
-open SolutionTemplate.Programs.Messages
-open SolutionTemplate.Programs
-open SolutionTemplate.Models
 open Microsoft.Extensions.Options
 
+open SolutionTemplate.Configuration
+open SolutionTemplate.ElmishProgram
+open SolutionTemplate.Models
+open SolutionTemplate.Programs.Messages
+open SolutionTemplate.Programs
+
 type Model = {
-    Text: string
-    Notifications: Notifications.Model
+    Text : string
+    Notifications : Notifications.Model
 }
 
 type Msg =
@@ -51,9 +52,10 @@ type Program
         | ProgramMessage.Local msg -> update msg m
 
     let bindings = [
-        "Text" |> Binding.twoWay ((fun m -> string m.Text), (fun v m -> string v |> SetSearchText |> Local))
-        "Notify" |> Binding.cmd (fun m -> Notification.InfoWithTimer "Title" m.Text (TimeSpan.FromSeconds 10.0)
-                                          |> Notifications.Msg.AddNotification |> NotificationMsg |> Local)
+        // Throttling is used to prevent focus reset on TextBox
+        "Text" |> Binding.twoWay ((fun m -> string m.Text), (fun v m -> string v |> SetSearchText |> Local), throttle)
+        "NotifyCommand" |> Binding.cmd (fun m -> Notification.InfoWithTimer "Title" m.Text (TimeSpan.FromSeconds 10.0)
+                                                 |> Notifications.Msg.AddNotification |> NotificationMsg |> Local)
         "Notifications"
         |> Binding.subModel ((fun m -> m.Notifications), snd, Local << NotificationMsg, notificationProgram.Bindings)
     ]

@@ -12,9 +12,10 @@
 
   <Grid unotookit:VisibleBoundsPadding.PaddingMask="All">
     <StackPanel Orientation="Vertical">
+      <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
       <TextBlock Text="{Binding Text}"/>
-      <Button Content="Display notification for 10 seconds" Command="{Binding Notify}" />
-      <muxc:InfoBar IsOpen="True" IsClosable="False" Message="As long as text is the same, no new notification is created when button is pressed multiple times, only timer starts again" />
+      <Button Content="Display notification for 10 seconds" Command="{Binding NotifyCommand}" />
+      <muxc:InfoBar IsOpen="True" IsClosable="False" Message="As long as text is the same, no new notification is created when button is pressed multiple times, only timer starts again. But if you change the text the button will add a new notification." />
     </StackPanel>
   </Grid>
 </Page>
