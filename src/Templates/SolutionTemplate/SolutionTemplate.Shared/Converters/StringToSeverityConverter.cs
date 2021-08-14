@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 
@@ -13,12 +15,20 @@ namespace SolutionTemplate.Converters
                 throw new ArgumentException($"This converter does not use any parameters. You should remove \"{parameter}\" passed as parameter.");
             }
 
-            if (value != null && !(value is string))
+            switch (value)
             {
-                throw new ArgumentException($"Value must either be null or of type string. Got {value} ({value.GetType().FullName})");
+                case null:
+                    Debug.WriteLine("Converting null to InfoBarSeverity by using Informational value");
+                    return InfoBarSeverity.Informational;
+                case string str:
+                    Debug.WriteLine("Converting string {str} to InfoBarSeverity");
+                    return Enum.Parse(typeof(InfoBarSeverity), str);
+                case object obj when Enum.IsDefined(typeof(InfoBarSeverity), obj):
+                    Debug.WriteLine("Converting number {obj} to InfoBarSeverity");
+                    return (InfoBarSeverity)obj;
+                default:
+                    throw new ArgumentException($"Value must either be null, a string or a number. Got {value} ({value.GetType().FullName})");
             }
-
-            return Enum.Parse(typeof(InfoBarSeverity), ((string)value));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
