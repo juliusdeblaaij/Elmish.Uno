@@ -10,6 +10,7 @@
     <ToolkitVersion>7.0.*</ToolkitVersion>
     <UnoUIVersion>[3.9.*,4.0.0)</UnoUIVersion>
     <UnoCoreVersion>2.4.*</UnoCoreVersion>
+    <UnoBehaviorsVersion>2.0.3-uno.*</UnoBehaviorsVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

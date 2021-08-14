@@ -19,6 +19,7 @@
     <PackageReference Include="Uno.Microsoft.Toolkit.Uwp" Version="$(ToolkitVersion)" />
     <PackageReference Include="Uno.Microsoft.Toolkit.Uwp.UI" Version="$(ToolkitVersion)" />
     <PackageReference Include="Uno.Microsoft.Toolkit.Uwp.UI.Controls" Version="$(ToolkitVersion)" />
+    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed" Version="$(UnoBehaviorsVersion)" />
     <PackageReference Include="Uno.UI.RemoteControl" Version="$(UnoUIVersion)" Condition="'$(Configuration)'=='Debug'" />
     <PackageReference Include="Uno.UI.Skia.Wpf" Version="$(UnoUIVersion)" />
   </ItemGroup>

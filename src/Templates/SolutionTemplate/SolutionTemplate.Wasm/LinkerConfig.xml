@@ -10,6 +10,7 @@
     <type fullname="Microsoft.Extensions.Hosting.HostOptions" />
   </assembly>
   <assembly fullname="Microsoft.Extensions.Options" />
+  <assembly fullname="Microsoft.Xaml.Interactions" />
 
   <assembly fullname="FSharp.Core" />
   <assembly fullname="System.Core">
