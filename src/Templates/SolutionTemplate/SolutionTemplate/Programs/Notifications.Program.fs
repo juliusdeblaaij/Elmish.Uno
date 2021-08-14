@@ -28,7 +28,7 @@ type public Program () =
         async {
             do! Async.Sleep time
             do dispatch (Local <| RemoveNotification notification)
-        } |> Async.StartChild |> Async.RunSynchronously |> ignore
+        } |> Async.StartAsTask |> ignore
 
     member p.Initial = Model.Initial
 
