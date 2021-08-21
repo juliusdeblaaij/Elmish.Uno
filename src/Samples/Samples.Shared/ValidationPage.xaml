@@ -13,7 +13,8 @@
   Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
   mc:Ignorable="d xamarin">
 
-  <!-- <Page.Resources>
+  <Page.Resources>
+    <!--
     <Style x:Key="textBoxInError" TargetType="Control">
       <Setter Property="Validation.ErrorTemplate">
         <Setter.Value>
@@ -35,7 +36,15 @@
         </Setter.Value>
       </Setter>
     </Style>
-  </Page.Resources>-->
+    -->
+    <Style x:Key="TextBoxErrorStyle" TargetType="TextBox">
+      <Setter Property="BorderBrush" Value="Red" />
+      <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+    </Style>
+    <DataTemplate x:Key="ErrorItemTemplate">
+      <TextBlock Foreground="Red" Text="{Binding}" />
+    </DataTemplate>
+  </Page.Resources>
   <Grid
     MinWidth="300"
     Margin="0,25,0,0"
@@ -62,7 +71,9 @@
       Grid.Row="0"
       Grid.Column="1"
       Margin="5"
-      PropertyName="Value">
+      PropertyName="Value"
+      ErrorContentStyle="{StaticResource TextBoxErrorStyle}"
+      ErrorItemTemplate="{StaticResource ErrorItemTemplate}">
       <TextBox Description="Valid value is 42" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </ctrl:ValidationControl>
     <TextBlock
@@ -77,7 +88,9 @@
       Grid.Row="1"
       Grid.Column="1"
       Margin="5"
-      PropertyName="Password">
+      PropertyName="Password"
+      ErrorContentStyle="{StaticResource TextBoxErrorStyle}"
+      ErrorItemTemplate="{StaticResource ErrorItemTemplate}">
       <TextBox Description="Requires upper case, lower case and digit" Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </ctrl:ValidationControl>
 
