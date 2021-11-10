@@ -45,7 +45,7 @@ namespace Elmish.Windows
 
     internal class ViewModel<TModel, TMsg> : Uno.ViewModel<TModel, TMsg>, ICustomPropertyProvider
     {
-        private readonly ImmutableDictionary<string, string> bindings;
+        private readonly ImmutableDictionary<string, string> bindingsMap;
 
         public ViewModel(TModel initialModel, FSharpFunc<TMsg, Unit> dispatch, FSharpList<Binding<TModel, TMsg>> bindings, ElmConfig config, string propNameChain) : base(initialModel, dispatch, bindings, config, propNameChain)
         {
@@ -55,7 +55,7 @@ namespace Elmish.Windows
                 return binding.Data.GetType().Name;
             }
 
-            this.bindings = bindings.ToImmutableDictionary(b => b.Name, GetBindingType);
+            this.bindingsMap = bindings.ToImmutableDictionary(b => b.Name, GetBindingType);
         }
 
         public override Uno.ViewModel<object, object> Create(object initialModel, FSharpFunc<object, Unit> dispatch, FSharpList<Binding<object, object>> bindings, ElmConfig config, string propNameChain)
@@ -65,7 +65,7 @@ namespace Elmish.Windows
         {
             if (name == "CurrentModel") return new DynamicCustomProperty<ViewModel<TModel, TMsg>, object>(name, vm => vm.CurrentModel);
             if (name == "HasErrors") return new DynamicCustomProperty<ViewModel<TModel, TMsg>, bool>(name, vm => ((INotifyDataErrorInfo)vm).HasErrors);
-            if (!bindings.TryGetValue(name, out var bindingType)) Debugger.Break();
+            if (!bindingsMap.TryGetValue(name, out var bindingType)) Debugger.Break();
             switch (bindingType)
             {
                 case nameof(BindingData<TModel, TMsg>.OneWayData):
