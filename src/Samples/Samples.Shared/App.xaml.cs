@@ -1,19 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System;
+using Microsoft.Extensions.Logging;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 
 namespace Elmish.Uno.Samples
@@ -44,8 +34,8 @@ namespace Elmish.Uno.Samples
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs e)
+        /// <param name="args">Details about the launch request and process.</param>
+        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -54,11 +44,11 @@ namespace Elmish.Uno.Samples
             }
 #endif
 
-#if NET5_0 && WINDOWS
+#if NET6_0_OR_GREATER && WINDOWS
             window = new Window();
             window.Activate();
 #else
-            window = global::Microsoft.UI.Xaml.Window.Current;
+            window = Microsoft.UI.Xaml.Window.Current;
 #endif
 
             Shell shell = window.Content as Shell;
@@ -72,17 +62,17 @@ namespace Elmish.Uno.Samples
                 shell = new Shell();
 #pragma warning restore DF0010 // Marks indisposed local variables.
 
-                if (e.UWPLaunchActivatedEventArgs.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                if (args.UWPLaunchActivatedEventArgs.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: Load state from previously suspended application
+                    // TODO: Load state from previously suspended application
                 }
 
                 // Place the frame in the current Window
                 window.Content = shell;
             }
 
-#if !(NET5_0 && WINDOWS)
-            if (e.UWPLaunchActivatedEventArgs.PrelaunchActivated == false)
+#if !(NET6_0_OR_GREATER && WINDOWS)
+            if (args.UWPLaunchActivatedEventArgs.PrelaunchActivated == false)
 #endif
             {
                 if (shell.RootFrame.Content == null)
@@ -90,7 +80,7 @@ namespace Elmish.Uno.Samples
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    shell.Navigate(typeof(MainPage), e.Arguments);
+                    shell.Navigate(typeof(MainPage), args.Arguments);
                 }
                 // Ensure the current window is active
                 window.Activate();
@@ -111,7 +101,6 @@ namespace Elmish.Uno.Samples
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
-
 
         /// <summary>
         /// Configures global Uno Platform logging

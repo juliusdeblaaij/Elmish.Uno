@@ -257,7 +257,7 @@ and [<AllowNullLiteral>] internal ViewModel<'model, 'msg>
       initialVisibility =
     let win = getWindow currentModel dispatch
     winRef.SetTarget win
-    win.Dispatcher.Invoke(fun () ->
+    win.DispatcherQueue.TryEnqueue(fun () ->
       let guiCtx = System.Threading.SynchronizationContext.Current
       async {
         win.DataContext <- dataContext

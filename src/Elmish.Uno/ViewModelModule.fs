@@ -34,7 +34,7 @@ type ViewModel() =
       let doDispatch = fun () ->
         Console.WriteLine "Dispatch"
         innerDispatch msg
-      element.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, fun () -> doDispatch()) |> ignore
+      element.DispatcherQueue.TryEnqueue(fun () -> doDispatch()) |> ignore
 
     program
     |> Program.withSetState setState

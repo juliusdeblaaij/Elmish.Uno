@@ -26,7 +26,7 @@ namespace Elmish.Uno.Samples
         {
             this.InitializeComponent();
 
-#if !(NET5_0 && WINDOWS)
+#if !(NET6_0 && WINDOWS)
             SystemNavigationManager.GetForCurrentView().BackRequested += OnSystemNavigationManagerBackRequested;
 #endif
             KeyboardAccelerator GoBack = new KeyboardAccelerator()
@@ -88,7 +88,7 @@ namespace Elmish.Uno.Samples
             return false;
         }
 
-#if !(NET5_0 && WINDOWS)
+#if !(NET6_0 && WINDOWS)
         private void OnSystemNavigationManagerBackRequested(object sender, BackRequestedEventArgs e)
         {
             OnBackRequested();

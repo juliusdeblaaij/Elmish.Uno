@@ -33,7 +33,7 @@ type Msg =
   | LoadFailed of exn
 
 let save text =
-  //CoreApplication.GetCurrentView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, fun () ->
+  //CoreApplication.GetCurrentView().DispatcherQueue.TryEnqueue(fun () ->
   //  let guiCtx = SynchronizationContext.Current
     async {
       //do! Async.SwitchToContext guiCtx
@@ -61,7 +61,7 @@ let save text =
   //).AsTask().AsAsync()
 
 let load () =
-  //CoreApplication.GetCurrentView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, fun () ->
+  //CoreApplication.GetCurrentView().DispatcherQueue.TryEnqueue(fun () ->
     //let guiCtx = SynchronizationContext.Current
     async {
       //do! Async.SwitchToContext guiCtx

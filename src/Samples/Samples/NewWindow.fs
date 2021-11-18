@@ -78,7 +78,7 @@ type Msg =
 
 let showWindow windowTitle pageType viewModel = async {
   let view = CoreApplication.CreateNewView()
-  do! view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, fun () ->
+  view.DispatcherQueue.TryEnqueue(fun () ->
       let window = CoreWindow.GetForCurrentThread ()
       let view = ApplicationView.GetForCurrentView ()
       view.Title <- windowTitle
@@ -88,7 +88,7 @@ let showWindow windowTitle pageType viewModel = async {
       frame.Navigate(pageType) |> ignore
       Window.Current.Content <- frame
       Window.Current.Activate()
-      ).AsTask()
+  ) |> ignore
 }
 
 let update window1PageType window2pageType getViewModel msg m =
