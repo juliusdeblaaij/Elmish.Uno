@@ -76,25 +76,20 @@ type Msg =
 | Win1Msg of Win1.Msg
 | Win2Msg of Win2.Msg
 
-let showWindow windowTitle pageType viewModel = async {
-  let view = CoreApplication.CreateNewView()
-  view.DispatcherQueue.TryEnqueue(fun () ->
-      let window = CoreWindow.GetForCurrentThread ()
-      let view = ApplicationView.GetForCurrentView ()
-      view.Title <- windowTitle
+let showWindow windowTitle pageType viewModel =
+    let window = new Window()
+    window.Title <- windowTitle
 
-      let frame = new Frame()
-      frame.DataContext <- viewModel
-      frame.Navigate(pageType) |> ignore
-      Window.Current.Content <- frame
-      Window.Current.Activate()
-  ) |> ignore
-}
+    let frame = new Frame()
+    frame.DataContext <- viewModel
+    frame.Navigate pageType |> ignore
+    window.Content <- frame
+    window.Activate()
 
 let update window1PageType window2pageType getViewModel msg m =
   match msg with
-  | ShowWin1 -> m, Cmd.OfAsync.attempt (showWindow "Window 1" window1PageType) (getViewModel ()) raise
-  | ShowWin2 -> m, Cmd.OfAsync.attempt (showWindow "Window 2" window2pageType) (getViewModel ()) raise
+  | ShowWin1 -> m, Cmd.OfFunc.attempt (showWindow "Window 1" window1PageType) (getViewModel ()) raise
+  | ShowWin2 -> m, Cmd.OfFunc.attempt (showWindow "Window 2" window2pageType) (getViewModel ()) raise
   | Win1Msg msg' -> { m with Win1 = Win1.update msg' m.Win1 }, Cmd.none
   | Win2Msg msg' -> { m with Win2 = Win2.update msg' m.Win2 }, Cmd.none
 
