@@ -702,7 +702,7 @@ and [<AllowNullLiteral>] internal ViewModel<'model, 'msg>
 
     member this.GetCustomProperty(name) = this.GetProperty(name)
 
-    member this.GetIndexedProperty(name, ``type`` : Type) = this.GetProperty(name)
+    member this.GetIndexedProperty(name, _ : Type) = this.GetProperty(name)
 
     member this.GetStringRepresentation() = this.CurrentModel.ToString()
 
