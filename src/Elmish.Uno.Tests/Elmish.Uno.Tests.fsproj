@@ -10,6 +10,7 @@
     <GenerateProgramFile>false</GenerateProgramFile>
     <!--Turn on warnings for unused values (arguments and let bindings) -->
     <OtherFlags>$(OtherFlags) --warnon:1182</OtherFlags>
+    <NoWarn>0988</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
