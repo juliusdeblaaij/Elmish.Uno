@@ -21,15 +21,16 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Install MSBuild.exe
-      uses: warrenbuckley/Setup-MSBuild@v1
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      uses: microsoft/setup-msbuild@v1.1
 
     - name: Restore NuGet Packages
       run: nuget restore 'src\\Elmish.Uno.sln' -ConfigFile 'NuGet.Config'
 
     - name: Build
-      run: msbuild 'src\\Elmish.Uno.sln' /t:Rebuild /p:Configuration=Release /p:Platform='Any CPU' -maxcpucount
+      run: |
+        msbuild 'src\\Elmish.Uno.sln' /t:Rebuild /p:Configuration=Release /p:Platform='Any CPU' -p:TargetFramework=net6.0-windows10.0.22000.0 -maxcpucount
+        msbuild 'src\\Elmish.Uno.sln' /t:Rebuild /p:Configuration=Release /p:Platform='Any CPU' -p:TargetFramework=net6.0 -maxcpucount
+
 
     - name: Test
       run: dotnet test --no-build --configuration Release src/Elmish.Uno.Tests/Elmish.Uno.Tests.fsproj

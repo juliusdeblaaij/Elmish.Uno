@@ -20,9 +20,7 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Install MSBuild.exe
-      uses: warrenbuckley/Setup-MSBuild@v1
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      uses: microsoft/setup-msbuild@v1.1
 
     - name: Install NuGet 6.x
       uses: nuget/setup-nuget@v1
@@ -35,7 +33,8 @@ jobs:
 
     - name: Build with dotnet
       run: |
-        msbuild 'src\\Elmish.Uno.sln' /t:Rebuild /p:Configuration=Release /p:Platform='Any CPU' -maxcpucount
+        msbuild 'src\\Elmish.Uno.sln' /t:Rebuild /p:Configuration=Release /p:Platform='Any CPU' -p:TargetFramework=net6.0-windows10.0.22000.0 -maxcpucount
+        msbuild 'src\\Elmish.Uno.sln' /t:Rebuild /p:Configuration=Release /p:Platform='Any CPU' -p:TargetFramework=net6.0 -maxcpucount
         $nuspec = get-content 'Elmish.Uno.nuspec' | %{ $_ -replace '\$versionSuffix\$',"-ci-${Env:GITHUB_RUN_ID}"}
         set-content 'Elmish.Uno.nuspec' -value $nuspec
         nuget pack 'Elmish.Uno.nuspec' -Properties Configuration=Release
