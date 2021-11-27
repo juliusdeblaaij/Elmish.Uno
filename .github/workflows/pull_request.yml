@@ -20,17 +20,20 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Install MSBuild.exe
+    - name: Install MSBuild
       uses: microsoft/setup-msbuild@v1.1
+      with:
+        #vs-version: '[17.0,)'
+        vs-prerelease: true
+        msbuild-architecture: x64
 
-    - name: Restore NuGet Packages
+    - name: Restore NuGet packages
       run: nuget restore 'src\\Elmish.Uno.sln' -ConfigFile 'NuGet.Config'
 
     - name: Build
       run: |
         msbuild 'src\\Elmish.Uno.sln' /t:Rebuild /p:Configuration=Release /p:Platform='Any CPU' -p:TargetFramework=net6.0-windows10.0.22000.0 -maxcpucount
         msbuild 'src\\Elmish.Uno.sln' /t:Rebuild /p:Configuration=Release /p:Platform='Any CPU' -p:TargetFramework=net6.0 -maxcpucount
-
 
     - name: Test
       run: dotnet test --no-build --configuration Release src/Elmish.Uno.Tests/Elmish.Uno.Tests.fsproj
